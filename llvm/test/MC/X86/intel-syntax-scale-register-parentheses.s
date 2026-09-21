@@ -2,6 +2,12 @@
 
 // Test that parentheses around scale register are interpreted correctly
 // Tests parentheses around registers and scale values in register addressing
+// CHECK: xor dword ptr [rbx + rsi + 10], eax
+  xor [rbx + (2*rsi+4)/2 + 8], eax
+// CHECK: xor dword ptr [rbx + 8*rsi + 24], eax
+  xor [rbx + (2*rsi+4)*4 + 8], eax
+// CHECK: xor dword ptr [2*rsi + 8], eax
+  xor [rsi * (1+1) + 8], eax
 // CHECK: xor dword ptr [rsi + 16], eax
   xor [rsi + (2) * 8], eax
 // CHECK: xor dword ptr [rsi + rbx + 16], eax
